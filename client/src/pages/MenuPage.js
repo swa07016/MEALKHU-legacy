@@ -3,10 +3,10 @@ import NavBar from '../components/NavBar';
 
 const MenuPage = (props) => {
     return (
-    <>
-        <NavBar/>
-        menu page
-    </>
+        <>
+            <NavBar/>
+            menu page
+        </>
     );
 }
 
