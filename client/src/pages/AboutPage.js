@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 import { Container } from 'reactstrap';
-import { Jumbotron, Button } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
 
 const AboutPage = (props) => {
     return (
