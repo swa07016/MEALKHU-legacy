@@ -18,11 +18,11 @@ const NavBar = (props) => {
   return (
     <div>
     
-      <Navbar style={{'background-color': '#940f0f'}} light expand="md">
+      <Navbar style={{'backgroundColor': '#940f0f'}} light expand="md">
       <Container className="themed-container">
-        <png>
+        <span>
             <a href='/'><img src="logo.png" width="50" /></a>
-        </png>
+        </span>
         <NavbarBrand href="/" style={{'marginLeft':'1.5rem', 'color':'#fff'}}>MEALKHU</NavbarBrand>
         <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
