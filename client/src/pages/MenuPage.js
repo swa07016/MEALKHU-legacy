@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import MealCard from '../components/MealCard';
+import { CustomInput, Form, FormGroup, Label } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
 import axios from 'axios';
+
+
 
 const MenuPage = (props) => {
     const [datas, setDatas] = useState([]);
@@ -10,7 +13,7 @@ const MenuPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-              'http://192.168.0.2:5000/api/datas',
+              'http://localhost:5000/api/datas',
               // localhost로 바꾸기
             );
             setDatas(result.data);
@@ -23,6 +26,17 @@ const MenuPage = (props) => {
     return (
         <>
             <NavBar/>
+            <Container>
+            
+                {/* ???????? ???? */}
+                {/* <FormGroup>
+                    <Label for="exampleCheckbox">??</Label>
+                    <div>
+                    <CustomInput type="checkbox" id="exampleCustomInline" label="??" inline />
+                   
+                    </div>
+                </FormGroup> */}
+            </Container>
             <Container>
             <Row xs="2" sm="2" md="4">
                 

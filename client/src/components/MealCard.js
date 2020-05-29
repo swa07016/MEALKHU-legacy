@@ -15,7 +15,6 @@ const MealCard = (props) => {
         
         <CardImg 
         top width="100%" 
-        onerror="this.src='https://pngimage.net/wp-content/uploads/2018/06/no-image-available-icon-png-8.png'"
         src={props.img} alt="Card image cap" />
         <CardBody>
           <CardTitle><strong>{props.name}</strong></CardTitle>
@@ -40,7 +39,7 @@ const MealCard = (props) => {
           'float':'left',
           'fontSize': '14px'
         }}>
-        View more
+        view more
         </span>
           <FontAwesomeIcon style={{
             'color': 'black',
