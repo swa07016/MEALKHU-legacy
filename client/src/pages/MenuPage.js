@@ -4,8 +4,7 @@ import MealCard from '../components/MealCard';
 import { CustomInput, Form, FormGroup, Label } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
 import axios from 'axios';
-
-
+import Loading from '../components/Loading';
 
 const MenuPage = (props) => {
     const [datas, setDatas] = useState([]);
@@ -14,7 +13,7 @@ const MenuPage = (props) => {
         const fetchData = async () => {
             const result = await axios(
               'http://localhost:5000/api/datas',
-              // localhost로 바꾸기
+              // localhostë¡œ ë°”ê¾¸ê¸°
             );
             setDatas(result.data);
             setIsLoading(true);
@@ -27,7 +26,6 @@ const MenuPage = (props) => {
         <>
             <NavBar/>
             <Container>
-            
                 {/* ???????? ???? */}
                 {/* <FormGroup>
                     <Label for="exampleCheckbox">??</Label>
@@ -37,32 +35,34 @@ const MenuPage = (props) => {
                     </div>
                 </FormGroup> */}
             </Container>
-            <Container>
-            <Row xs="2" sm="2" md="4">
+            
                 
-                    {
-                        isLoading ? ( 
-                            datas.map((data) => 
-                            <Col>
-                            <MealCard
-                                id = {data.id}
-                                name = {data.name}
-                                address = {data.address}
-                                latitude = {data.latitude}
-                                longitude = {data.longitude}
-                                type = {data.type}
-                                menu = {data.menu}
-                                img = {data.img}
-                                img_source = {data.img_source}
-                            />
-                            </Col>
-                            ) 
-                         ) : 'Loading' 
-                    }
+                {isLoading ? 
+                (<Container>
+                    <Row xs="2" sm="2" md="4">
+                        {datas.map((data) => 
+                        <Col>
+                        <MealCard
+                            id = {data.id}
+                            name = {data.name}
+                            address = {data.address}
+                            latitude = {data.latitude}
+                            longitude = {data.longitude}
+                            type = {data.type}
+                            menu = {data.menu}
+                            img = {data.img}
+                            img_source = {data.img_source}
+                        />
+                        </Col>
+                        ) 
+                        }
+                        </Row>
+                </Container>)
+                : <Loading/>
+                }
                     
                 
-            </Row>
-            </Container>
+                
         </>
     );
 }
