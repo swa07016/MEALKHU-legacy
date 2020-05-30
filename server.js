@@ -19,7 +19,7 @@ app.get('/api/hello', (req, res) => {
 
 app.get('/api/datas', (req, res) => {
     iconv.extendNodeEncodings();
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(iconv.decode(dataBuffer, 'EUC-KR').toString());
 })
 

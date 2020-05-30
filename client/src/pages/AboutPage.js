@@ -21,7 +21,7 @@ const AboutPage = (props) => {
                         <hr className="my-2" />
                         <br/>
                         <p>식당추가 등 문의사항은 언제든지 환영입니다! swa07016@khu.ac.kr 연락주세요</p>
-                        <br/><br/><br/>
+                        {/* <br/><br/><br/> */}
                     </Jumbotron>
                 </Container>
             </div>

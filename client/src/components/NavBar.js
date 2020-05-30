@@ -7,18 +7,17 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Col
 } from 'reactstrap';
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
-    
-      <Navbar style={{'backgroundColor': '#940f0f'}} light expand="md">
+    <>
+      <Navbar style={{'backgroundColor': '#940f0f', 'display':'block'}} light expand="md" fixed="top">
       <Container className="themed-container">
         <span>
             <a href='/'><img src="logo.png" width="50" /></a>
@@ -41,7 +40,7 @@ const NavBar = (props) => {
           </Collapse>  
         </Container>
       </Navbar>
-    </div>
+    </>
   );
 }
 
