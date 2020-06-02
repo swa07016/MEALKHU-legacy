@@ -24,6 +24,7 @@ const MenuPage = (props) => {
     const [cafe, setCafe] = useState(false);
     const [etc, setEtc] = useState(false);
 
+
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
