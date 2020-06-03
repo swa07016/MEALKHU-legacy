@@ -51,7 +51,6 @@ const MenuPage = (props) => {
                     for(let k = 0; k < temp.length; k++) {
                         if(datas[j].type === temp[k]) {
                             result.push(datas[j]);
-                            console.log('skr');
                         }
                     }
                 }
