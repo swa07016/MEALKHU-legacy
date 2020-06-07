@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const mysql = require('mysql');
-var iconv  = require('iconv-lite');
+const iconv  = require('iconv-lite');
+
+const bcrypt = require('bcrypt');                                                    
+const saltRounds = 10;   
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,23 +44,26 @@ app.get('/api/datas', (req, res) => {
 // signup
 app.post('/api/signup', (req, res) => {
     let sql = 'INSERT INTO USER (name, pw) VALUES(?, ?)';
-    const params = [req.body.username, req.body.password];
-    connection.query(sql, params, (err, rows, fields) => {
-        if(err){ 
-            console.log(err);
-            res.send({
-                "code":400,
-                "message": "error"
-            })
-        }
-        else {
-            res.send({
-                "code":200,
-                "message": "success"
-            })
-        }
+    let plainPassword = req.body.password;
+    bcrypt.hash(plainPassword, saltRounds, function(err, hash) {
+        
+        const params = [req.body.username, hash];
+        connection.query(sql, params, (err, rows, fields) => {
+            if(err){ 
+                console.log(err);
+                res.send({
+                    "code":400,
+                    "message": "error"
+                })
+            }
+            else {
+                res.send({
+                    "code":200,
+                    "message": "success"
+                })
+            }
+        })
     })
-
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
