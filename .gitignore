@@ -3,3 +3,4 @@ json_datas.json
 client/public/images
 client/node_modules
 client/src/config
+database.json
