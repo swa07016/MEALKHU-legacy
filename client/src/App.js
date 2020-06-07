@@ -2,6 +2,7 @@ import React from 'react';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import MenuPage from './pages/MenuPage';
+import SigninPage from './pages/SigninPage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +18,8 @@ function App() {
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/menu" component={MenuPage}/>
-          {/* mypick, login 라우팅 */}
+          <Route exact path="/signin" component={SigninPage}/>
+          {/* mypick, signup 라우팅 */}
         </Switch>
       </>
     </Router>

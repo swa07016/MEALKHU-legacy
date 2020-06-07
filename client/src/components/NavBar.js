@@ -36,7 +36,7 @@ const NavBar = (props) => {
                 <NavLink href="/mypick" style={{'color':'#fff'}}>MyPick</NavLink>
               </NavItem>
             </Nav>
-            <NavbarText style={{'color':'#fff'}}>OSS Project</NavbarText>
+            <NavbarText><a href="http://khuhub.khu.ac.kr/2019102227/TermProject" target="_blank" style={{'color':'#fff', 'textDecoration':'none'}}>OSS Project</a></NavbarText>
           </Collapse>  
         </Container>
       </Navbar>
