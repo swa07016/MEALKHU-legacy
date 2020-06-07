@@ -8,7 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Col
 } from 'reactstrap';
 
 const NavBar = (props) => {

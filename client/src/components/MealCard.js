@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardBody, CardTitle, CardText, CardImg, CardFooter, Button } from 'reactstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Map from './Map';
 import './MealCard.css';
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"

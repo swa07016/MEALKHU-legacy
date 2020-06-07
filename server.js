@@ -31,11 +31,33 @@ app.get('/api/hello', (req, res) => {
     res.send('Hello skrrrr!');
 });
 
-
+// datas 전달
 app.get('/api/datas', (req, res) => {
     iconv.extendNodeEncodings();
     res.header("Access-Control-Allow-Origin", "*");
     res.send(iconv.decode(dataBuffer, 'EUC-KR').toString());
+})
+
+// signup
+app.post('/api/signup', (req, res) => {
+    let sql = 'INSERT INTO USER (name, pw) VALUES(?, ?)';
+    const params = [req.body.username, req.body.password];
+    connection.query(sql, params, (err, rows, fields) => {
+        if(err){ 
+            console.log(err);
+            res.send({
+                "code":400,
+                "message": "error"
+            })
+        }
+        else {
+            res.send({
+                "code":200,
+                "message": "success"
+            })
+        }
+    })
+
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
