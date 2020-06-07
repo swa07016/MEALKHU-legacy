@@ -18,24 +18,25 @@ const SigninPage = (props) => {
                     <span className="font-weight-bold">MEALKHU</span>.com
                 </h1>
                 </a>
-                <h2 className="text-center"><br/>Sign In</h2>
+                <h2 className="text-center"><br/>Sign Up</h2>
                 <FormGroup>
                     <Label>Username</Label>
-                    <Input required="required" type="name" placeholder="Enter your name"></Input>
+                    <Input  required="required" type="name" placeholder="Enter your name"></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label>Password</Label>
                     <Input required="required" type="password" placeholder="Enter your password"></Input>
                 </FormGroup>
                 <FormGroup>
-                    <Button className="btn-lg btn-dark btn-block">Sign in</Button>
+                    <Label>Confirm Password</Label>
+                    <Input required="required" type="password" placeholder="Enter your password again"></Input>
                 </FormGroup>
-                <div className="text-center pt-3">
-                Or continue with your social account
-                </div>
-                <FacebookLoginButton className="mt-3 mb-3"/>
-                <div className="text-center">
-                    <a href="/signup">Sign up here!</a>
+                <FormGroup>
+                    <Button className="btn-lg btn-dark btn-block">Sign up</Button>
+                </FormGroup>
+                
+                <div className="text-center mt-3">
+                    <a href="/signin">Sign in here!</a>
                 </div>
             </Form>
             
