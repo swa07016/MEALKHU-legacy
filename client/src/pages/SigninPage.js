@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
-
 import {FacebookLoginButton} from 'react-social-login-buttons';
 
+
+
 const SigninPage = (props) => {
+    
+//     const [userName, setUserName] = useState('');
+//     const [userPw, setuserPw] = useState('');
+    
+//     const signinApi = (user) => {
+//         return fetch('/api/signin', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(user)
+//         }).then(response => response.json())
+//     }
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         if (!userId || !userPw) {
+//         return;
+//         }
+//     try {
+//         const response = await loginApi({
+//             user_id: userId,
+//             user_pw: userPw
+//         });
+
+//         if (response.result === 'ok') {
+//             setToken();
+//         } else {
+//             throw new Error(response.error);
+//         }
+//     } catch (err) {
+//             alert('로그인에 실패했습니다.');
+//             setUserId('');
+//             setUserPw('');
+//             console.error('login error', err);
+//     }
+//     };
+// };
     return (
         <>
             <Form style={{
