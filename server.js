@@ -40,28 +40,40 @@ app.get("/api/datas", (req, res) => {
   res.send(iconv.decode(dataBuffer, "EUC-KR").toString());
 });
 
-// ???? ???? ??
 // signup
 app.post("/api/signup", (req, res) => {
-  let sql = "INSERT INTO USER (name, pw) VALUES(?, ?)";
-  let plainPassword = req.body.password;
-  bcrypt.hash(plainPassword, saltRounds, function (err, hash) {
-    const params = [req.body.username, hash];
-    connection.query(sql, params, (err, rows, fields) => {
-      if (err) {
-        console.log(err);
-        res.send({
-          code: 400,
-          message: "error",
+
+  let sql_usercheck = `SELECT * FROM USER WHERE name='${req.body.username}';`;
+  connection.query(sql_usercheck, (err, rows, fields) => {
+    console.log(rows);
+    if(rows.length!==0) {
+      return res.json({
+        code: 400,
+        message: 'user exist'
+      })
+    }
+    else {
+      let sql = "INSERT INTO USER (name, pw) VALUES(?, ?)";
+      let plainPassword = req.body.password;
+      bcrypt.hash(plainPassword, saltRounds, function (err, hash) {
+        const params = [req.body.username, hash];
+        connection.query(sql, params, (err, rows, fields) => {
+          if (err) {
+            console.log(err);
+            res.send({
+              code: 400,
+              message: "error",
+            });
+          } else {
+            res.send({
+              code: 200,
+              message: "success",
+            });
+          }
         });
-      } else {
-        res.send({
-          code: 200,
-          message: "success",
-        });
-      }
-    });
-  });
+      });
+    }
+  })
 });
 
 app.post("/api/signin", (req, res) => {

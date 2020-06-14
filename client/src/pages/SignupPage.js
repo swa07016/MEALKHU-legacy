@@ -37,12 +37,18 @@ const SigninPage = (props) => {
             fetch("http://localhost:3000/api/signup", signup_info)
             .then(response => response.json())
             .then(json => {
-                if(json.code === 200) {
+                if(json.message === 'success') {
                     alert('회원가입에 성공했습니다.');
                     props.history.push('/signin');
-                }
-                else if(json.code === 400) {
+                } 
+                else if(json.message === 'user exist') {
+                    alert('이미 존재하는 유저입니다');
+                    setUsername('');
+                    setPassword('');
+                } else {
                     alert('회원가입에 실패했습니다.');
+                    setUsername('');
+                    setPassword('');
                 }
             })
         }

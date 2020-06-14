@@ -36,7 +36,6 @@ const SigninPage = (props) => {
                 cookie.save('username', response.username, {
                     expires
                 })
-                alert('Login success');
                 props.history.push('/mypick');
             } else if(response.message === "user does not exist"){
                 alert('User does not exist');
