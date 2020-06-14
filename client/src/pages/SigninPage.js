@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cookie from 'react-cookies'
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { FacebookLoginButton } from 'react-social-login-buttons';
 
@@ -30,6 +31,11 @@ const SigninPage = (props) => {
 
             if (response.message === "Token issue") {
                 localStorage.setItem("user", JSON.stringify(response.token));
+                const expires = new Date()
+                expires.setDate(expires.getDate() + 60)
+                cookie.save('username', response.username, {
+                    expires
+                })
                 alert('Login success');
                 props.history.push('/mypick');
             } else if(response.message === "user does not exist"){

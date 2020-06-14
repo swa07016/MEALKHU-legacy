@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
+import cookie from 'react-cookies';
 import axios from 'axios';
 import MealCard from '../components/MealCard';
 
-const UserCards = () => {
+const UserCards = (props) => {
     const [datas, setDatas] = useState([]);
+    const [username, setUsername] = useState('User');
     const [picks, setPicks] = useState([{
         "id": "1",
         "name": "#신슨즈(#Shinsons)",
@@ -70,15 +72,22 @@ const UserCards = () => {
             setDatas(result.data);        
           };
           fetchData();
+          setUsername(cookie.load('username'));
+    }, [username]);
 
-    }, []);
-
-
+    const LogoutHandler = (e) => {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      cookie.remove('username');
+      props.isLogin(false);
+      return ;
+    }
 
     return (
         <>
             <h1 style={{'paddingTop':'3rem'}} className="text-center">
-                <span className="font-weight-bold">User's Pick</span>
+                <div className="font-weight-bold">{username}'s Pick</div>
+                <Button onClick={LogoutHandler} color="link" className="float-right"><h4>Logout</h4></Button>
             </h1>  
             <br/>
                 <hr className="my-2" />

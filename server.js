@@ -97,12 +97,16 @@ app.post("/api/signin", (req, res) => {
                         issuer: "admin",
                       }
                     );
-            
+                      
+                  
                     return res.json({
                         code: 200,
                         message: 'Token issue',
                         token,
+                        username : name
                       });
+                    
+                    
 
                   } catch (error) {
                     console.error(error);

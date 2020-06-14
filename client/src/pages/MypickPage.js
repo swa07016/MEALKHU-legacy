@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import LoginLink from '../components/LoginLink';
 import UserCards from '../components/UserCards';
@@ -9,7 +9,6 @@ import { Container } from 'reactstrap';
 
 const MypickPage = () => {
     const [isLogin, setIsLogin] = useState(false);
-    const [username, setUsername] = useState('');
     const authApi = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         return fetch('/api/auth', {
@@ -43,8 +42,7 @@ const MypickPage = () => {
             {
             isLogin ? 
             (<>
-            
-            <UserCards/>
+            <UserCards isLogin={setIsLogin}/>
             </>) 
             : 
             (<>
