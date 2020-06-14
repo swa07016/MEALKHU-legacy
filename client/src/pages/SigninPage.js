@@ -29,7 +29,7 @@ const SigninPage = (props) => {
             });
 
             if (response.message === "Token issue") {
-                localStorage.setItem("user_token", JSON.stringify(response.token));
+                localStorage.setItem("user", JSON.stringify(response.token));
                 alert('Login success');
                 props.history.push('/');
             } else if(response.message === "user does not exist"){

@@ -33,10 +33,6 @@ connection.connect();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/api/hello", (req, res) => {
-  res.send("Hello skrrrr!");
-});
-
 // datas 전달
 app.get("/api/datas", (req, res) => {
   iconv.extendNodeEncodings();
@@ -68,14 +64,6 @@ app.post("/api/signup", (req, res) => {
   });
 });
 
-// ????
-// res.send({
-//     "code":200,
-//     "message": "success"
-// })
-// ????
-// jwt_secret_key.value
-// signin
 app.post("/api/signin", (req, res) => {
   
   const name = req.body.username;
@@ -136,6 +124,37 @@ app.post("/api/signin", (req, res) => {
     })
     }
   })
+});
+
+
+// ?? ???
+app.get('/api/auth', (req, res) => {
+  // ?? ??
+  try {
+    // ?? ??? ??? ??(req.headers.authorization)? ???? ???? ?? ??
+    req.decoded = jwt.verify(req.headers.authorization, jwt_secret_key.value);
+    return res.status(200).json({
+      code: 200,
+      message: 'valid token'
+    });
+  }
+
+  // ?? ??
+  catch (error) {
+    // ????? ??? ??
+    if (error.name === 'TokenExpiredError') {
+      return res.status(419).json({
+        code: 419,
+        message: 'expired token'
+      });
+    }
+
+    // ??? ???? ???? ?? ??
+    return res.status(401).json({
+      code: 401,
+      message: 'invalid token'
+    });
+  }
 });
 
 
