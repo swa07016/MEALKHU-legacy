@@ -31,7 +31,7 @@ const SigninPage = (props) => {
             if (response.message === "Token issue") {
                 localStorage.setItem("user", JSON.stringify(response.token));
                 alert('Login success');
-                props.history.push('/');
+                props.history.push('/mypick');
             } else if(response.message === "user does not exist"){
                 alert('User does not exist');
                 props.history.push('/signin');

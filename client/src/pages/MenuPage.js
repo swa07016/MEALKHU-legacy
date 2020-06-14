@@ -12,7 +12,6 @@ const MenuPage = (props) => {
     const [datas, setDatas] = useState([]);
     const [filteredDatas, setFilteredDatas] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
     const [all, setAll] = useState(false);
     const [Kfood, setKfood] = useState(false);
     const [Cfood, setCfood] = useState(false);

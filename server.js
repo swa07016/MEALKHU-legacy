@@ -110,7 +110,6 @@ app.post("/api/signin", (req, res) => {
                         code: 500,
                         message: 'server error',
                       });
-
                   }
 
             } else {
