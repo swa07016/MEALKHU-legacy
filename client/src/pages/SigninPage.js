@@ -1,48 +1,71 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import {FacebookLoginButton} from 'react-social-login-buttons';
-
-
+import { FacebookLoginButton } from 'react-social-login-buttons';
 
 const SigninPage = (props) => {
     
-//     const [userName, setUserName] = useState('');
-//     const [userPw, setuserPw] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userPw, setUserPw] = useState('');
     
-//     const signinApi = (user) => {
-//         return fetch('/api/signin', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(user)
-//         }).then(response => response.json())
-//     }
+    const signinApi = (user) => {
+        return fetch('/api/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(response => response.json())
+    }
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         if (!userId || !userPw) {
-//         return;
-//         }
-//     try {
-//         const response = await loginApi({
-//             user_id: userId,
-//             user_pw: userPw
-//         });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!userName || !userPw) {
+        return;
+        }
+        try {
+            const response = await signinApi({
+                username: userName,
+                password: userPw
+            });
 
-//         if (response.result === 'ok') {
-//             setToken();
-//         } else {
-//             throw new Error(response.error);
-//         }
-//     } catch (err) {
-//             alert('로그인에 실패했습니다.');
-//             setUserId('');
-//             setUserPw('');
-//             console.error('login error', err);
-//     }
-//     };
-// };
+            if (response.message === "Token issue") {
+                localStorage.setItem("user_token", JSON.stringify(response.token));
+                alert('Login success');
+                props.history.push('/');
+            } else if(response.message === "user does not exist"){
+                alert('User does not exist');
+                props.history.push('/signin');
+                setUserName('');
+                setUserPw('');
+            } else if(response.message === "invalid password")  {
+                alert('Invalid Password');
+                props.history.push('/signin');
+                setUserName('');
+                setUserPw('');
+            } else if(response.message === "server error") {
+                alert('Server Error');
+                props.history.push('/signin');
+                setUserName('');
+                setUserPw('');
+            }
+        } catch (err) {
+                alert('Signin Failed');
+                setUserName('');
+                setUserPw('');
+                props.history.push('/signin');
+            }
+        };
+
+        const onChangeUsername = (e) => {
+            setUserName(e.target.value);
+        };
+        
+        const onChangePassword = (e) => {
+            setUserPw(e.target.value);
+        };
+    
+
+
     return (
         <>
             <Form style={{
@@ -60,14 +83,14 @@ const SigninPage = (props) => {
                 <h2 className="text-center"><br/>Sign In</h2>
                 <FormGroup>
                     <Label>Username</Label>
-                    <Input required="required" type="name" placeholder="Enter your name"></Input>
+                    <Input required="required" value={userName} onChange={onChangeUsername} type="name" placeholder="Enter your name" ></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label>Password</Label>
-                    <Input required="required" type="password" placeholder="Enter your password"></Input>
+                    <Input required="required" type="password" value={userPw} onChange={onChangePassword} placeholder="Enter your password"></Input>
                 </FormGroup>
                 <FormGroup>
-                    <Button className="btn-lg btn-dark btn-block">Sign in</Button>
+                    <Button type="submit" onClick={handleSubmit} className="btn-lg btn-dark btn-block">Sign in</Button>
                 </FormGroup>
                 <div className="text-center pt-3">
                 Or continue with your social account
@@ -80,6 +103,6 @@ const SigninPage = (props) => {
             
         </>
     );
-}
 
+};
 export default SigninPage;

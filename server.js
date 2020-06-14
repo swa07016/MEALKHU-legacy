@@ -77,85 +77,66 @@ app.post("/api/signup", (req, res) => {
 // jwt_secret_key.value
 // signin
 app.post("/api/signin", (req, res) => {
-  // ????
-//   res.send('aa');
+  
   const name = req.body.username;
   let sql = `SELECT name, pw FROM USER WHERE name='${req.body.username}';`;
-  
-  connection.query(sql, (err, rows, fields) => {
-    
-        if (!rows) {
-        res.send({
-            code: 400,
-            message: "failed",
-        });
-        return ;
-        }
-        
-        else{
-            
-            bcrypt.compare(req.body.password, rows[0].pw, function (err, result){
-                const pw = rows[0].pw;
-                if(result) {
-                   
-                    try {
-                        // jwt.sign() ???: ?? ??
-                        const token = jwt.sign(
-                          {
-                            name,
-                            pw,
-                          },
-                          jwt_secret_key.value,
-                          {
-                            expiresIn: "60m", // 60?
-                            issuer: "admin",
-                          }
-                        );
+  let sql_usercheck = `SELECT * FROM USER WHERE name='${req.body.username}';`;
+ 
+  connection.query(sql_usercheck, (err, rows, fields) => {
+    if(rows.length === 0) {
+      flag = false;
+      // console.log(flag);
+      return res.send({
+        code: 400,
+        message: "user does not exist",
+      });
+    } else {
+
+      connection.query(sql, (err, rows, fields) => {
+        bcrypt.compare(req.body.password, rows[0].pw, function (err, result){
+            const pw = rows[0].pw;
+            if(result) {
                 
-                        return res.json({
-                            code: 200,
-                            message: '??? ???????.',
-                            token,
-                          });
-                        
-                      } catch (error) {
-                        console.error(error);
-                        return res.status(500).json({
-                            code: 500,
-                            message: '?? ??',
-                          });
+                try {
+                    const token = jwt.sign(
+                      {
+                        name,
+                        pw,
+                      },
+                      jwt_secret_key.value,
+                      {
+                        expiresIn: "60m",
+                        issuer: "admin",
                       }
+                    );
+            
+                    return res.json({
+                        code: 200,
+                        message: 'Token issue',
+                        token,
+                      });
 
-                } else {
-                    res.send({
-                        code: 400,
-                        message: "failed",
-                    });
-                }
-            })
-        }
-    })
-});
-//     else {
-//     bcrypt.compare(req.body.password, rows[0].pw, function (err, res) {
-//       console.log(res);
-//       if(!res) {
-//         res.send({
-//             code: 400,
-//             message: "failed",
-//           });
-//       }
-//       else {
-//     //   ???? ??? ?
-//       const pw = rows[0].pw;
-      
-//       }
-//     });
+                  } catch (error) {
+                    console.error(error);
+                    return res.status(500).json({
+                        code: 500,
+                        message: 'server error',
+                      });
 
-//     }
+                  }
 
-//   });
+            } else {
+                return res.json({
+                    code: 400,
+                    message: "invalid password",
+                });
+            }
+        })
     
+    })
+    }
+  })
+});
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
