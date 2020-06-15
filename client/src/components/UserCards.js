@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import MealCard from '../components/MealCard';
+import PickedCard from '../components/PickedCard';
 
 const UserCards = (props) => {
     const [datas, setDatas] = useState([]);
@@ -96,7 +96,7 @@ const UserCards = (props) => {
                 <Row xs="2" sm="2" md="4">
                     {picks.map((data, index) => 
                     <Col>
-                    <MealCard
+                    <PickedCard
                         key = {index}
                         id = {data.id}
                         name = {data.name}

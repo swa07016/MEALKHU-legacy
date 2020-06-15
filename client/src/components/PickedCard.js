@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardBody, CardTitle, CardText, CardImg, CardFooter, Button } from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Map from './Map';
-import './MealCard.css';
+import './PickedCard.css';
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -60,19 +60,16 @@ const MealCard = (props) => {
       </Card>
      
       <Modal size="lg" className="modalClass" isOpen={modal} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>{props.name}</ModalHeader>
+        <ModalHeader toggle={toggleModal}>{props.name}</ModalHeader> 
         <ModalBody>
-        
         주소
         <hr className="my-2"/>
-        {props.address} 
+        {props.address}
         <br/>
         <Map
           latitude = {props.latitude}
           longitude = {props.longitude}
         />
-        
-
         </ModalBody>
         <ModalFooter>
         <div style={{
@@ -83,7 +80,7 @@ const MealCard = (props) => {
         <small>
         썸네일 출처
         <hr className="my-2"/>
-        {props.img_source} <Button size="sm" className="float-right" color="warning">Pick!</Button>
+        {props.img_source}  <Button size="sm" className="float-right" color="danger">Delete</Button>
         </small>
         </div>
         </ModalFooter>
