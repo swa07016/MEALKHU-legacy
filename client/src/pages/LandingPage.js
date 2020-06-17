@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
-import MealCard from '../components/MealCard';
+import LandingMap from '../components/LandingMap';
 import { CustomInput } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
 import axios from 'axios';
-import Loading from '../components/Loading';
+
 
 const LandingPage = (props) => {
     const [datas, setDatas] = useState([]);
@@ -21,6 +21,7 @@ const LandingPage = (props) => {
     const [cafe, setCafe] = useState(false);
     const [etc, setEtc] = useState(false);
     
+   
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
@@ -152,21 +153,14 @@ const LandingPage = (props) => {
                         onChange={()=>setEtc(!etc)}
                         />
                     </Col>
-                    
+
                 </Row>
+            {datas ? <LandingMap
+                datas = {datas}
+            /> : 'loading...'}
             </Container>
 
 
-            <Container>
-                {/* ???????? ???? */}
-                {/* <FormGroup>
-                    <Label for="exampleCheckbox">??</Label>
-                    <div>
-                    <CustomInput type="checkbox" id="exampleCustomInline" label="??" inline />
-                   
-                    </div>
-                </FormGroup> */}
-            </Container>
                 
                     
                 
