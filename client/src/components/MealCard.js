@@ -10,8 +10,40 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 const MealCard = (props) => {
   
   const [modal, setModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const toggleModal = () => setModal(!modal);
   
+  
+    const authApi = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return fetch('/api/auth', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': user
+            }
+        }).then(response => response.json())
+        .then(result => {
+            if(result.message === 'valid token') {
+                setIsLogin(true);
+                // pick 로직 수행
+            } else {
+              alert('로그인이 필요합니다.');
+              window.location.href = "/mypick";
+            }
+        });
+    }
+    
+    const pickHandler = (e) => {
+      e.preventDefault();
+      authApi();
+    }
+
+    // useEffect(() => {
+    //     authApi();
+    // }, [isLogin]);
+
+
   return (
     <>
       <Card style={{
@@ -83,7 +115,7 @@ const MealCard = (props) => {
         <small>
         썸네일 출처
         <hr className="my-2"/>
-        {props.img_source} <Button size="sm" className="float-right" color="warning">Pick!</Button>
+        {props.img_source} <Button onClick={pickHandler} size="sm" className="float-right" color="warning">Pick!</Button>
         </small>
         </div>
         </ModalFooter>

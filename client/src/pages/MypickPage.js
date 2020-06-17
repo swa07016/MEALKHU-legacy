@@ -23,7 +23,7 @@ const MypickPage = () => {
                 setIsLogin(true);
                 
             } else if(result.message === 'expired token') {
-                alert('토큰이 만료되었습니다. 로그인 해주세요.');
+                // alert('토큰이 만료되었습니다. 로그인 해주세요.');
                 setIsLogin(false);
             } else if(result.message === 'invalid token') {
                 setIsLogin(false);

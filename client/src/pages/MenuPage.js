@@ -5,7 +5,7 @@ import { CustomInput } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
 import axios from 'axios';
 import Loading from '../components/Loading';
-import './MenuPage.css';
+
 
 
 const MenuPage = (props) => {
