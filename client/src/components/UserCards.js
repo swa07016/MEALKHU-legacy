@@ -5,81 +5,35 @@ import axios from 'axios';
 import PickedCard from '../components/PickedCard';
 
 const UserCards = (props) => {
-    const [datas, setDatas] = useState([]);
     const [username, setUsername] = useState('User');
-    const [picks, setPicks] = useState([{
-        "id": "1",
-        "name": "#신슨즈(#Shinsons)",
-        "address": "경기도 용인시 기흥구 서그내로15번길 34 (서천동)",
-        "latitude": "37.2464876",
-        "longitude": "127.0768072",
-        "type": "호프",
-        "menu": "칵테일, 술",
-        "img": "/images/1_img.jpg",
-        "img_source": "https://www.picuki.com/profile/shinsons"
-      },
-      {
-        "id": "2",
-        "name": "감쟈",
-        "address": "경기도 용인시 기흥구 서그내로15번길 29, 102호 (서천동)",
-        "latitude": "37.2464608",
-        "longitude": "127.0764465",
-        "type": "술집",
-        "menu": "안주, 술",
-        "img": "/images/2_img.jpg",
-        "img_source": "https://www.facebook.com/gamjua/posts/1408798555882739/"
-      },
-      {
-        "id": "3",
-        "name": "깜냥",
-        "address": "경기도 용인시 기흥구 서그내로15번길 29 (서천동,1층)",
-        "latitude": "37.2464608",
-        "longitude": "127.0764465",
-        "type": "술집",
-        "menu": "안주, 술",
-        "img": "/images/3_img.jpg",
-        "img_source": "https://www.facebook.com/ggamnyang316/"
-      },
-      {
-        "id": "4",
-        "name": "꼬꼬리아통닭",
-        "address": "경기도 용인시 기흥구 서그내로15번길 39 (서천동)",
-        "latitude": "37.2465772",
-        "longitude": "127.0775286",
-        "type": "호프",
-        "menu": "치킨, 술",
-        "img": "/images/4_img.jpg",
-        "img_source": "https://bigsta.net/tag/%EA%BC%AC%EA%BC%AC%EB%A6%AC%EC%95%84/"
-      },
-      {
-        "id": "5",
-        "name": "도스마스수원경희대점",
-        "address": "경기도 용인시 기흥구 서그내로15번길 33 (서천동, 서윤빌딩1층)",
-        "latitude": "37.2467668",
-        "longitude": "127.0768863",
-        "type": "기타",
-        "menu": "부리또, 타코",
-        "img": "/images/5_img.jpg",
-        "img_source": "https://blog.naver.com/alttium/221443978130"
-      }]);
+    const [picks, setPicks] = useState([]);
     
+    const authApi = () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      return fetch('/api/mypicks', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': user
+        }
+      }).then(response => response.json())
+      .then( result => {
+        setPicks(result.datas);
+        console.log(result.datas);
+      } 
+      );
+    }
+
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios(
-              'http://localhost:5000/api/datas',
-              // localhostë¡œ ë°”ê¾¸ê¸°
-            );
-            setDatas(result.data);       
-          };
-          fetchData();
-          setUsername(props.username);
-          // setUsername(cookie.load('username'));
-    }, [username]);
+      setUsername(props.username);
+      authApi();
+      }, [username]);
+
+
 
     const LogoutHandler = (e) => {
       e.preventDefault();
       localStorage.removeItem('user');
-      // cookie.remove('username');
       props.isLogin(false);
       return ;
     }

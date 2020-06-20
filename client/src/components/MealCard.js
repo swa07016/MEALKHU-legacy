@@ -26,7 +26,6 @@ const MealCard = (props) => {
         .then(result => {
             if(result.message === 'valid token') {
                
-
               return fetch('/api/pick', {
                 method: 'POST',
                 headers: {
@@ -39,9 +38,9 @@ const MealCard = (props) => {
             }).then(response => response.json())
             .then(result => {
               if(result.message === 'insertion success') {
-                alert('pick success');
+                alert('MyPick에 담겼습니다.');
               } else if(result.message === 'card exist') {
-                 alert('이미 mypick에 존재합니다.');
+                 alert('이미 MyPick에 존재합니다.');
               } else {
                 alert('error');
               }

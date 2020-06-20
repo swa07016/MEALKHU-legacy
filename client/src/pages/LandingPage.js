@@ -27,7 +27,7 @@ const LandingPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-              'http://localhost:5000/api/datas',
+              '/api/datas',
               // localhostë¡œ ë°”ê¾¸ê¸°
             );
             setDatas(result.data);

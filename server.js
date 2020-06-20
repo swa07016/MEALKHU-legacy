@@ -46,7 +46,6 @@ app.post("/api/signup", (req, res) => {
 
   let sql_usercheck = `SELECT * FROM USER WHERE name='${req.body.username}';`;
   connection.query(sql_usercheck, (err, rows, fields) => {
-    console.log(rows);
     if(rows.length!==0) {
       return res.json({
         code: 400,
@@ -174,6 +173,26 @@ app.get('/api/auth', (req, res) => {
   }
 });
 
+app.get("/api/mypicks", (req, res) => {
+  let result = [];
+  const user = jwt_decode(req.headers.authorization);
+  const username = user.name;
+  let temp = iconv.decode(dataBuffer, "EUC-KR");
+
+  connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds) => {
+    let user_picks = rows[0].pick.split(',');
+      temp = JSON.parse(temp);
+      user_picks.pop();
+      for(let i=0; i<user_picks.length; i++) {
+        user_picks[i] = parseInt(user_picks[i]);
+      }
+      for(let i=0; i<user_picks.length; i++) {
+        result.push(temp[user_picks[i]-1]);
+    }
+
+      res.send({'datas':result});
+  })
+});
 
 app.post('/api/pick', (req, res) => {
    
@@ -182,7 +201,6 @@ app.post('/api/pick', (req, res) => {
     const cardid = req.body.cardid;
 
     connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
-      console.log(rows[0]);
       if(rows.length === 0) {
         // ??
       } else {
