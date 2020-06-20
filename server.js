@@ -4,6 +4,7 @@ const fs = require("fs");
 const mysql = require("mysql");
 const iconv = require("iconv-lite");
 const jwt = require("jsonwebtoken");
+const jwt_decode = require('jwt-decode');
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -144,13 +145,17 @@ app.post("/api/signin", (req, res) => {
 
 // ?? ???
 app.get('/api/auth', (req, res) => {
-  // ?? ??
+  
+  
+  const user = jwt_decode(req.headers.authorization);
+  console.log(user.name);
   try {
     // ?? ??? ??? ??(req.headers.authorization)? ???? ???? ?? ??
     req.decoded = jwt.verify(req.headers.authorization, jwt_secret_key.value);
     return res.status(200).json({
       code: 200,
-      message: 'valid token'
+      message: 'valid token',
+      username: user.name
     });
   }
 

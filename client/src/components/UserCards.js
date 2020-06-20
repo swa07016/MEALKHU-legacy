@@ -69,16 +69,17 @@ const UserCards = (props) => {
               'http://localhost:5000/api/datas',
               // localhostë¡œ ë°”ê¾¸ê¸°
             );
-            setDatas(result.data);        
+            setDatas(result.data);       
           };
           fetchData();
-          setUsername(cookie.load('username'));
+          setUsername(props.username);
+          // setUsername(cookie.load('username'));
     }, [username]);
 
     const LogoutHandler = (e) => {
       e.preventDefault();
       localStorage.removeItem('user');
-      cookie.remove('username');
+      // cookie.remove('username');
       props.isLogin(false);
       return ;
     }

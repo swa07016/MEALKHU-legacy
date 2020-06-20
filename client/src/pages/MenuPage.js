@@ -3,9 +3,6 @@ import NavBar from '../components/NavBar';
 import MealCard from '../components/MealCard';
 import { CustomInput } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
-
-import { Card, CardText, CardBody, CardTitle, } from "reactstrap";
-
 import axios from 'axios';
 import Loading from '../components/Loading';
 
@@ -190,9 +187,6 @@ const MenuPage = (props) => {
                 </Container>)
                 : <Loading value="Loading.."/>
                 }
-                    
-                
-                
         </>
     );
 }

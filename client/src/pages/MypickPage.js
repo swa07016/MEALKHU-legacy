@@ -9,6 +9,7 @@ import { Container } from 'reactstrap';
 
 const MypickPage = () => {
     const [isLogin, setIsLogin] = useState(false);
+    const [userName, setUserName] = useState('');
     const authApi = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         return fetch('/api/auth', {
@@ -21,7 +22,7 @@ const MypickPage = () => {
         .then(result => {
             if(result.message === 'valid token') {
                 setIsLogin(true);
-                
+                setUserName(result.username);
             } else if(result.message === 'expired token') {
                 // alert('토큰이 만료되었습니다. 로그인 해주세요.');
                 setIsLogin(false);
@@ -42,7 +43,7 @@ const MypickPage = () => {
             {
             isLogin ? 
             (<>
-            <UserCards isLogin={setIsLogin}/>
+            <UserCards username={userName} isLogin={setIsLogin}/>
             </>) 
             : 
             (<>
