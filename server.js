@@ -85,8 +85,6 @@ app.post("/api/signin", (req, res) => {
  
   connection.query(sql_usercheck, (err, rows, fields) => {
     if(rows.length === 0) {
-      flag = false;
-      // console.log(flag);
       return res.send({
         code: 400,
         message: "user does not exist",
@@ -148,9 +146,8 @@ app.get('/api/auth', (req, res) => {
   
   
   const user = jwt_decode(req.headers.authorization);
-  console.log(user.name);
   try {
-    // ?? ??? ??? ??(req.headers.authorization)? ???? ???? ?? ??
+
     req.decoded = jwt.verify(req.headers.authorization, jwt_secret_key.value);
     return res.status(200).json({
       code: 200,
@@ -159,9 +156,9 @@ app.get('/api/auth', (req, res) => {
     });
   }
 
-  // ?? ??
+  
   catch (error) {
-    // ????? ??? ??
+    
     if (error.name === 'TokenExpiredError') {
       return res.status(419).json({
         code: 419,
@@ -169,7 +166,7 @@ app.get('/api/auth', (req, res) => {
       });
     }
 
-    // ??? ???? ???? ?? ??
+
     return res.status(401).json({
       code: 401,
       message: 'invalid token'
@@ -177,5 +174,45 @@ app.get('/api/auth', (req, res) => {
   }
 });
 
+
+app.post('/api/pick', (req, res) => {
+   
+    const user = jwt_decode(req.headers.authorization);
+    const username = user.name;
+    const cardid = req.body.cardid;
+
+    connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
+      console.log(rows[0]);
+      if(rows.length === 0) {
+        // ??
+      } else {
+        // ???? ??
+        let flag = true;
+        let user_picks = rows[0].pick.split(',');
+        user_picks.pop();
+        for(let i=0; i<user_picks.length; i++) {
+          user_picks[i] = parseInt(user_picks[i]);
+          if(user_picks[i] == cardid) {
+            flag = false;
+          }
+        }
+        if(flag) {
+          const newPick = rows[0].pick + cardid.toString() + ',';
+          connection.query(`UPDATE USER SET pick='${newPick}' WHERE NAME='${username}';`, (err, rows, fields) => {
+            return res.status(200).json({
+              code: 200,
+              message: 'insertion success',
+            });
+          })
+        } else {
+          return res.status(401).json({
+            code: 401,
+            message: 'card exist'
+          });
+        }
+
+      }
+    })
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -25,15 +25,36 @@ const MealCard = (props) => {
         }).then(response => response.json())
         .then(result => {
             if(result.message === 'valid token') {
+               
+
+              return fetch('/api/pick', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': user
+                },
+                body: JSON.stringify({
+                  "cardid":props.id
+                })
+            }).then(response => response.json())
+            .then(result => {
+              if(result.message === 'insertion success') {
+                alert('pick success');
+              } else if(result.message === 'card exist') {
+                 alert('이미 mypick에 존재합니다.');
+              } else {
+                alert('error');
+              }
+            });
                 setIsLogin(true);
-                // pick 로직 수행
             } else {
               alert('로그인이 필요합니다.');
               window.location.href = "/mypick";
             }
         });
     }
-    
+
+
     const pickHandler = (e) => {
       e.preventDefault();
       authApi();

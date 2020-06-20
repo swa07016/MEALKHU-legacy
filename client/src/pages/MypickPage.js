@@ -3,9 +3,6 @@ import NavBar from '../components/NavBar';
 import LoginLink from '../components/LoginLink';
 import UserCards from '../components/UserCards';
 import { Container } from 'reactstrap';
-// auth로 로그인한 사용자일 때와 아닐때 판단해서 화면을 다르게 
-// 렌더링
-// useEffect로 초기 인증 
 
 const MypickPage = () => {
     const [isLogin, setIsLogin] = useState(false);

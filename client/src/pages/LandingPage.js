@@ -89,11 +89,14 @@ const LandingPage = (props) => {
             return ;
         } 
         else {
-            console.log(filteredDatas);
             setIsRandom(1);
             setTimeout(()=>{
             let x = getRandomInt(0, filteredDatas.length);
-            let y = getRandomInt(0, filteredDatas.length);
+            let y = -1;
+            while(1) {
+                y = getRandomInt(0, filteredDatas.length);
+                if(x!=y) break;
+            }
             setRandomCards([filteredDatas[x], filteredDatas[y]]);    
             setIsRandom(2);
         }, 2500);
@@ -123,7 +126,7 @@ const LandingPage = (props) => {
                         'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
                     }}
                     >  
-                    <Row xs="1" sm="2" md="2"> 
+                    <Row xs="1" sm="1" md="2"> 
                         <Col style={{
                             
                         }}>
@@ -240,7 +243,7 @@ const LandingPage = (props) => {
 
 
                             </Row>
-</Container>
+                        </Container>
                         ) 
                         
                         
