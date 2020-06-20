@@ -3,6 +3,9 @@ import NavBar from '../components/NavBar';
 import MealCard from '../components/MealCard';
 import { CustomInput } from 'reactstrap';
 import { Container, Row, Col } from "reactstrap";
+
+import { Card, CardText, CardBody, CardTitle, } from "reactstrap";
+
 import axios from 'axios';
 import Loading from '../components/Loading';
 
@@ -89,8 +92,8 @@ const MenuPage = (props) => {
             <NavBar/>
             <Container style={{
                 paddingTop : '1.5rem'
-            }}>
-                
+            }}> 
+
                 <Row>
                     <Col>
                         <CustomInput type="switch" id="all" label="전체"
@@ -155,8 +158,9 @@ const MenuPage = (props) => {
                         onChange={()=>setEtc(!etc)}
                         />
                     </Col>
-    
                 </Row>
+
+
             </Container>
 
 
@@ -184,7 +188,7 @@ const MenuPage = (props) => {
                         }
                         </Row>
                 </Container>)
-                : <Loading/>
+                : <Loading value="Loading.."/>
                 }
                     
                 

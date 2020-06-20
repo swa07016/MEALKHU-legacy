@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import NavBar from '../components/NavBar';
 import LandingMap from '../components/LandingMap';
 import { CustomInput } from 'reactstrap';
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button, Jumbotron } from "reactstrap";
 import axios from 'axios';
-
+import Loading from '../components/Loading';
+import MealCard from '../components/MealCard';
 
 const LandingPage = (props) => {
     const [datas, setDatas] = useState([]);
     const [filteredDatas, setFilteredDatas] = useState([]);
+    const [RandomCards, setRandomCards] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [all, setAll] = useState(false);
     const [Kfood, setKfood] = useState(false);
@@ -20,7 +22,7 @@ const LandingPage = (props) => {
     const [fastfood, setFastfood] = useState(false);
     const [cafe, setCafe] = useState(false);
     const [etc, setEtc] = useState(false);
-    
+    const [isRandom, setIsRandom] = useState(0);
    
     useEffect(() => {
         const fetchData = async () => {
@@ -33,9 +35,7 @@ const LandingPage = (props) => {
           };
           fetchData();
     }, []);
-    
-    // filtereddatas 처리 + isloading변경
-    
+
     useEffect(() => {
         setIsLoading(false);
         let result = [];
@@ -82,14 +82,62 @@ const LandingPage = (props) => {
         }
     }, [all]);
 
+    const randomHandler = () => {
+        
+        if(filteredDatas.length === 0) {
+            alert('메뉴를 선택하세요');
+            return ;
+        } 
+        else {
+            console.log(filteredDatas);
+            setIsRandom(1);
+            setTimeout(()=>{
+            let x = getRandomInt(0, filteredDatas.length);
+            let y = getRandomInt(0, filteredDatas.length);
+            setRandomCards([filteredDatas[x], filteredDatas[y]]);    
+            setIsRandom(2);
+        }, 2500);
+        }
+    }
+
+    const getRandomInt = (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+      }
+
     return (
         <>
             <NavBar/>
             <Container style={{
                 paddingTop : '1.5rem'
             }}>
+            
+            <div style={{'display':'flex', 'width':'100%', "height":'100%'}}>
+                <Container>
                 
-                <Row>
+                    <Jumbotron 
+                    style={{
+                        'backgroundColor':'#fff',
+                        'paddingTop': '1.5rem',
+                        'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+                    }}
+                    >  
+                    <Row xs="1" sm="2" md="2"> 
+                        <Col style={{
+                            
+                        }}>
+                        <h3 className="text-center">
+                            <span className="font-weight-bold">랜덤추천 : </span>메뉴를 선택하세요 
+                        </h3>
+                        <span style={{
+                            'paddingLeft' : '0.5rem'
+                        }}>
+                        {/* <Button color="warning">Random!</Button> */}
+                        
+                        </span>
+                        <Container>                        
+                        <Row>
                     <Col>
                         <CustomInput type="switch" id="all" label="전체"
                         checked={all}
@@ -97,7 +145,7 @@ const LandingPage = (props) => {
                         />
                     </Col>
                 </Row>
-                <Row xs="3" sm="3" md="5">
+                <Row xs="3" sm="3" md="4">
                     <Col>
                         <CustomInput type="checkbox" id="Kfood" label="한식" 
                         checked={Kfood}
@@ -153,8 +201,56 @@ const LandingPage = (props) => {
                         onChange={()=>setEtc(!etc)}
                         />
                     </Col>
+                    </Row>
+                    <div style={{
+                            'paddingTop':'1.5rem',
+                            'alignItems':'center'
+                            ,'display':'flex', 'width':'100%', "height":'100%','textAlign':'center'
+                        }}>
+                            <Button onClick={randomHandler} size="lg" style={{
+                                'margin':'0 auto'
+                            }} color="danger">Random!</Button>
+                        </div> 
+                    </Container>
 
-                </Row>
+                        
+                        </Col>
+                        <Col>
+                        {isRandom === 0 ? ('') : ( (isRandom === 1) ? <span style={{'padding':'1.5rem'}}><Loading value="추첨중.."/></span> :(
+                            <Container>
+                            <Row>
+                                {
+                                    RandomCards.map((data, index)=> (
+                                        <Col>
+                                <MealCard
+                                key = {index}
+                                id = {data.id}
+                                name = {data.name}
+                                address = {data.address}
+                                latitude = {data.latitude}
+                                longitude = {data.longitude}
+                                type = {data.type}
+                                menu = {data.menu}
+                                img = {data.img}
+                                img_source = {data.img_source}
+                                />
+                                </Col>
+                                    ))
+                                }
+
+
+                            </Row>
+</Container>
+                        ) 
+                        
+                        
+                        )}
+                        </Col>
+                        </Row>
+                    </Jumbotron>
+                </Container>
+            </div>
+            
             {datas ? <LandingMap
                 datas = {datas}
             /> : 'loading...'}

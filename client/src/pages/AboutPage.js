@@ -8,7 +8,7 @@ const AboutPage = (props) => {
         <>
             <NavBar/>
             <div style={{'display':'flex', 'width':'100%', "height":'100%', 'textAlign':'center', 'alignItems':'center'}}>
-                <Container style={{}}>
+                <Container>
                     <Jumbotron 
                     style={{'backgroundColor':'#fff'}}
                     >

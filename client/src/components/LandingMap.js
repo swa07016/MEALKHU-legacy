@@ -1,5 +1,5 @@
 /*global kakao*/
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Input, Button, ButtonGroup } from "reactstrap";
 import { Label, CustomInput, Row, Col, FormGroup } from "reactstrap";
 import appKey from "../config/appKey.json";
@@ -122,7 +122,7 @@ const LandingMap = (props) => {
 
   return (
     <>
-      
+      <hr className="my-2" />
       <Row>
       <Col>
         <span className="font-weight-bold">MEALKHU MAP</span>
