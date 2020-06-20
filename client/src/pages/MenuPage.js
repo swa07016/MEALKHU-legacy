@@ -161,14 +161,6 @@ const MenuPage = (props) => {
 
 
             <Container>
-                {/* ???????? ???? */}
-                {/* <FormGroup>
-                    <Label for="exampleCheckbox">??</Label>
-                    <div>
-                    <CustomInput type="checkbox" id="exampleCustomInline" label="??" inline />
-                   
-                    </div>
-                </FormGroup> */}
             </Container>
                 {isLoading ? 
                 (<Container style={{'paddingTop':'1.2rem'}}>
