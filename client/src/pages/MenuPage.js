@@ -57,7 +57,7 @@ const MenuPage = (props) => {
         }
         setFilteredDatas(result);
         setIsLoading(true);
-    }, [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc]);
+    }, [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc, datas]);
 
     useEffect(() => {
         if(all === true) {

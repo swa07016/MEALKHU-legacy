@@ -59,7 +59,6 @@ app.post("/api/signup", (req, res) => {
         const params = [req.body.username, hash];
         connection.query(sql, params, (err, rows, fields) => {
           if (err) {
-            console.log(err);
             res.send({
               code: 400,
               message: "error",
@@ -202,9 +201,11 @@ app.post('/api/pick', (req, res) => {
 
     connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
       if(rows.length === 0) {
-        // ??
+        return res.status(401).json({
+          code: 401,
+          message: 'card exist'
+        });
       } else {
-        // ???? ??
         let flag = true;
         let user_picks = rows[0].pick.split(',');
         user_picks.pop();
@@ -231,6 +232,49 @@ app.post('/api/pick', (req, res) => {
 
       }
     })
+});
+
+app.post('/api/delete', (req, res) => {
+  const user = jwt_decode(req.headers.authorization);
+  const username = user.name;
+  const cardid = req.body.cardid;
+
+  connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
+    if(rows.length === 0) {
+      return res.status(401).json({
+        code: 401,
+        message: 'card exist'
+      });
+    } else {
+      let flag = false;
+      let user_picks = rows[0].pick.split(',');
+      let newPick = '';
+      user_picks.pop();
+      for(let i=0; i<user_picks.length; i++) {
+        if(user_picks[i] == cardid) {
+          flag = true;
+          continue;
+        }
+        else newPick = newPick + (user_picks[i] + ',');
+      }
+      if(flag) {    
+        console.log(user_picks, newPick);
+        connection.query(`UPDATE USER SET pick='${newPick}' WHERE NAME='${username}';`, (err, rows, fields) => {
+          return res.status(200).json({
+            code: 200,
+            message: 'delete success',
+          });
+        })
+      } else {
+        return res.status(401).json({
+          code: 401,
+          message: 'delete error'
+        });
+      }
+
+    }
+  })
+
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

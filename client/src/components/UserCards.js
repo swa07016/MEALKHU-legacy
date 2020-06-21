@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
-import cookie from 'react-cookies';
-import axios from 'axios';
 import PickedCard from '../components/PickedCard';
 
 const UserCards = (props) => {
@@ -10,6 +8,7 @@ const UserCards = (props) => {
     
     const authApi = () => {
       const user = JSON.parse(localStorage.getItem('user'));
+      
       return fetch('/api/mypicks', {
         method: 'GET',
         headers: {
@@ -19,7 +18,6 @@ const UserCards = (props) => {
       }).then(response => response.json())
       .then( result => {
         setPicks(result.datas);
-        console.log(result.datas);
       } 
       );
     }
@@ -27,7 +25,7 @@ const UserCards = (props) => {
     useEffect(() => {
       setUsername(props.username);
       authApi();
-      }, [username]);
+      }, [username, props]);
 
 
 
@@ -50,7 +48,7 @@ const UserCards = (props) => {
             <Container style={{'paddingTop':'1.2rem'}}>
                 <Row xs="2" sm="2" md="4">
                     {picks.map((data, index) => 
-                    <Col>
+                    <Col key = {index}>
                     <PickedCard
                         key = {index}
                         id = {data.id}

@@ -12,6 +12,56 @@ const MealCard = (props) => {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
   
+  const authApi = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(!user) {
+      alert('토큰이 만료되었습니다.');
+        window.location.href = "/mypick";
+        return ;
+      }
+    return fetch('/api/auth', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': user
+        }
+    }).then(response => response.json())
+    .then(result => {
+        if(result.message === 'valid token') {
+           
+          return fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': user
+            },
+            body: JSON.stringify({
+              "cardid":props.id
+            })
+        }).then(response => response.json())
+        .then(result => {
+          if(result.message === 'delete success') {
+            alert('delete success');
+            window.location.href = "/mypick";
+          } else if(result.message === 'delete error') {
+             alert('delete error');
+          } else {
+            alert('error');
+          }
+        });
+        } else {
+          alert('토큰이 만료되었습니다.');
+          window.location.href = "/mypick";
+        }
+    });
+}
+
+
+  const deleteHandler = (e) => {
+    e.preventDefault();
+    authApi();
+  }
+
   return (
     <>
       <Card style={{
@@ -80,7 +130,7 @@ const MealCard = (props) => {
         <small>
         썸네일 출처
         <hr className="my-2"/>
-        {props.img_source}  <Button size="sm" className="float-right" color="danger">Delete</Button>
+        {props.img_source}  <Button size="sm" onClick={deleteHandler} className="float-right" color="danger">Delete</Button>
         </small>
         </div>
         </ModalFooter>

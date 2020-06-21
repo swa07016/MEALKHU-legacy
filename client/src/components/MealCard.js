@@ -10,12 +10,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 const MealCard = (props) => {
   
   const [modal, setModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const toggleModal = () => setModal(!modal);
   
   
     const authApi = () => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if(!user) {
+          alert('로그인이 필요합니다.');
+            window.location.href = "/mypick";
+            return ;
+          }
         return fetch('/api/auth', {
             method: 'GET',
             headers: {
@@ -45,7 +49,7 @@ const MealCard = (props) => {
                 alert('error');
               }
             });
-                setIsLogin(true);
+
             } else {
               alert('로그인이 필요합니다.');
               window.location.href = "/mypick";
@@ -58,11 +62,6 @@ const MealCard = (props) => {
       e.preventDefault();
       authApi();
     }
-
-    // useEffect(() => {
-    //     authApi();
-    // }, [isLogin]);
-
 
   return (
     <>

@@ -1,7 +1,7 @@
 /*global kakao*/
-import React, { useEffect, useState, Fragment } from "react";
-import { Input, Button, ButtonGroup } from "reactstrap";
-import { Label, CustomInput, Row, Col, FormGroup } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Input, } from "reactstrap";
+import { Label, Row, Col, FormGroup } from "reactstrap";
 import appKey from "../config/appKey.json";
 
 const LandingMap = (props) => {
@@ -23,7 +23,6 @@ const LandingMap = (props) => {
     document.head.appendChild(script);
 
     script.onload = () => {
-      console.log(FDatas);
       kakao.maps.load(() => {
         let container = document.getElementById("map");
         let options = {
@@ -111,12 +110,11 @@ const LandingMap = (props) => {
       }
     }
     setFDatas(result);
-  }, [selectedOption]);
+  }, [selectedOption, props]);
  
 
 
   const handleOptionChange = (e) => {
-    console.log(e.target.value);
     setselectedOption(e.target.value);
   }
 

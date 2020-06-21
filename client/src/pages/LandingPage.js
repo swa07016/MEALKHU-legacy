@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect} from 'react';
 import NavBar from '../components/NavBar';
 import LandingMap from '../components/LandingMap';
 import { CustomInput } from 'reactstrap';
@@ -55,7 +55,7 @@ const LandingPage = (props) => {
         }
         setFilteredDatas(result);
         setIsLoading(true);
-    }, [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc]);
+    }, [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc, datas]);
 
     useEffect(() => {
         if(all === true) {
@@ -95,7 +95,7 @@ const LandingPage = (props) => {
             let y = -1;
             while(1) {
                 y = getRandomInt(0, filteredDatas.length);
-                if(x!=y) break;
+                if(x!==y) break;
             }
             setRandomCards([filteredDatas[x], filteredDatas[y]]);    
             setIsRandom(2);
