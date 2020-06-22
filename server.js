@@ -179,6 +179,7 @@ app.get("/api/mypicks", (req, res) => {
   let temp = iconv.decode(dataBuffer, "EUC-KR");
 
   connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds) => {
+    
     let user_picks = rows[0].pick.split(',');
       temp = JSON.parse(temp);
       user_picks.pop();

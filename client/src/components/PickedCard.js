@@ -41,7 +41,7 @@ const MealCard = (props) => {
         }).then(response => response.json())
         .then(result => {
           if(result.message === 'delete success') {
-            alert('delete success');
+            alert('삭제 완료');
             window.location.href = "/mypick";
           } else if(result.message === 'delete error') {
              alert('delete error');

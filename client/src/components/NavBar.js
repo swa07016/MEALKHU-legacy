@@ -19,7 +19,7 @@ const NavBar = (props) => {
       <Navbar style={{'backgroundColor': '#940f0f', 'display':'block'}} light expand="md" fixed="top">
       <Container className="themed-container">
         <span>
-            <a href='/'><img src="logo.png" width="50" /></a>
+            <a href='/'><img src="logo.png" alt="logo" width="50" /></a>
         </span>
         <NavbarBrand href="/" style={{'marginLeft':'1.5rem', 'color':'#fff'}}>MEALKHU</NavbarBrand>
         <NavbarToggler onClick={toggle} />
@@ -35,7 +35,7 @@ const NavBar = (props) => {
                 <NavLink href="/mypick" style={{'color':'#fff'}}>MyPick</NavLink>
               </NavItem>
             </Nav>
-            <NavbarText><a href="http://khuhub.khu.ac.kr/2019102227/TermProject" target="_blank" rel="noopener" style={{'color':'#fff', 'textDecoration':'none'}}>OSS Project</a></NavbarText>
+            <NavbarText><a href="http://khuhub.khu.ac.kr/2019102227/TermProject" target="_blank" rel="noopener noreferrer" style={{'color':'#fff', 'textDecoration':'none'}}>OSS Project</a></NavbarText>
           </Collapse>  
         </Container>
       </Navbar>

@@ -11,7 +11,6 @@ const LandingPage = (props) => {
     const [datas, setDatas] = useState([]);
     const [filteredDatas, setFilteredDatas] = useState([]);
     const [RandomCards, setRandomCards] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [all, setAll] = useState(false);
     const [Kfood, setKfood] = useState(false);
     const [Cfood, setCfood] = useState(false);
@@ -28,16 +27,13 @@ const LandingPage = (props) => {
         const fetchData = async () => {
             const result = await axios(
               '/api/datas',
-              // localhostë¡œ ë°”ê¾¸ê¸°
             );
             setDatas(result.data);
-            setIsLoading(true);
           };
           fetchData();
     }, []);
 
     useEffect(() => {
-        setIsLoading(false);
         let result = [];
         const states = [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc];
         const types = [['한식'], ['중식'], ['일식'], ['고기'], ['분식'], ['호프', '술집'], ['패스트푸드'], ['카페', '디저트'], ['기타']];
@@ -54,7 +50,6 @@ const LandingPage = (props) => {
             }
         }
         setFilteredDatas(result);
-        setIsLoading(true);
     }, [Kfood, Cfood, Jfood, meat, snackfood, pub, fastfood, cafe, etc, datas]);
 
     useEffect(() => {
