@@ -25,7 +25,7 @@ $ npm run server
 $ npm run dev
 ```
 
-- 데이터 custom 하기 : 루트 디렉토리에 json_datas.json 파일을 생성하고, 아래의 형식처럼 데이터들을 저장해줍니다.
+- 데이터 custom 하기 : 루트 디렉토리에 json_datas.json이름의 파일을 생성하고, 아래의 형식처럼 데이터들을 저장해줍니다.
 ```
 [
   {
