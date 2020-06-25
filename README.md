@@ -1,29 +1,32 @@
 # MEALKHU
 MEALKHU는 경희대학생들의 식사고민을 덜어주기 위해 제작된 웹사이트입니다. 경희대 근처 생활권(정건, 마을)에 있는 식당들을 종류별로 카테고리화 했습니다. 랜딩페이지에서 랜덤추천 및 mealkhu맵을 이용할 수 있고, 메뉴페이지에서 메뉴별 식당들을 조회할 수 있습니다. pick기능으로 원하는 식당을 mypick에 담아 둘 수 있습니다. 
+
 ## How to install
 1. clone : 로컬로 저장소를 클론합니다.
-```bash
+```
 $ git clone http://khuhub.khu.ac.kr/2019102227/TermProject.git
 ```
 2. npm install : 루트 디렉토리에서 아래의 명령어로 모듈들을 설치합니다.
-```bash
+```
 $ npm install && cd client && npm install
 ```
+
 ## How to use
 - react 서버 실행 방법 : 루트 디렉토리에서 아래의 명령어를 실행합니다.
-```bash
+```
 $ npm run client
 ```
 - node 서버 실행 방법 : 루트 디렉토리에서 아래의 명령어를 실행합니다.
-```bash
+```
 $ npm run server
 ```
 - react, node 서버 동시 실행 방법 : 루트 디렉토리에서 아래의 명령어를 실행합니다.
-```bash
+```
 $ npm run dev
 ```
+
 - 데이터 custom 하기 : 루트 디렉토리에 json_datas.json 파일을 생성하고, 아래의 형식처럼 데이터들을 저장해줍니다.
-```javascript
+```
 [
   {
     "id": "1",
@@ -38,8 +41,9 @@ $ npm run dev
   }, ...
   ]
 ```
+
 - 각종 key들 설정법
-```bash
+```
 // database.json
 {
     "host":"호스트",
@@ -64,5 +68,6 @@ $ npm run dev
 - Mysql
 - Aws EC2
 - Kakao Map Api
+
 ## License
 MIT LICENSE
