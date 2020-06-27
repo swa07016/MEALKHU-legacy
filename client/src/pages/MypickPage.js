@@ -14,6 +14,7 @@ const MypickPage = () => {
             headers: {
                 'Content-Type': 'application/json',
                 'authorization': user
+
             }
         }).then(response => response.json())
         .then(result => {

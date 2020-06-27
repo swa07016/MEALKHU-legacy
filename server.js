@@ -29,7 +29,25 @@ const connection = mysql.createConnection({
   database: conf.database,
 });
 
-connection.connect();
+function handleDisconnect() {
+  connection.connect(function(err) {            
+    if(err) {                            
+      console.log('error when connecting to connection:', err);
+      setTimeout(handleDisconnect, 2000); 
+    }                                   
+  });                                 
+                                         
+  connection.on('error', function(err) {
+    console.log('connection error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+      return handleDisconnect();                      
+    } else {                                    
+      throw err;                              
+    }
+  });
+}
+
+handleDisconnect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -179,8 +197,21 @@ app.get("/api/mypicks", (req, res) => {
   let temp = iconv.decode(dataBuffer, "EUC-KR");
 
   connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds) => {
+    if(rows.length === 0) {
+      return res.status(401).json({
+        code: 401,
+        message: 'card 0'
+      });
+    }
+    if(rows[0].pick === null) {
+      return res.status(401).json({
+        code: 401,
+        message: 'card 0'
+      });
+    }
     
     let user_picks = rows[0].pick.split(',');
+      console.log(rows[0].pick);
       temp = JSON.parse(temp);
       user_picks.pop();
       for(let i=0; i<user_picks.length; i++) {
@@ -196,43 +227,55 @@ app.get("/api/mypicks", (req, res) => {
 
 app.post('/api/pick', (req, res) => {
    
-    const user = jwt_decode(req.headers.authorization);
-    const username = user.name;
-    const cardid = req.body.cardid;
+  const user = jwt_decode(req.headers.authorization);
+  const username = user.name;
+  const cardid = req.body.cardid;
 
-    connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
-      if(rows.length === 0) {
+  connection.query(`SELECT pick FROM USER WHERE NAME='${username}';`, (err, rows, fileds)=> {
+    if(rows.length === 0) {
+      return res.status(401).json({
+        code: 401,
+        message: 'card exist'
+      });
+    } 
+    else {
+      if(rows[0].pick === null || rows[0].pick === '') {
+        const newPick = cardid.toString() + ',';
+        connection.query(`UPDATE USER SET pick='${newPick}' WHERE NAME='${username}';`, (err, rows, fields) => {
+          return res.status(200).json({
+            code: 200,
+            message: 'insertion success',
+          });
+        })
+      }
+      else {
+      var flag = true;
+      let user_picks = rows[0].pick.split(',');
+      user_picks.pop();
+      for(let i=0; i<user_picks.length; i++) {
+        user_picks[i] = parseInt(user_picks[i]);
+        if(user_picks[i] == cardid) {
+          flag = false;
+        }
+      }
+      if(flag) {
+        const newPick = rows[0].pick + cardid.toString() + ',';
+        connection.query(`UPDATE USER SET pick='${newPick}' WHERE NAME='${username}';`, (err, rows, fields) => {
+          return res.status(200).json({
+            code: 200,
+            message: 'insertion success',
+          });
+        })
+      }
+      else {
         return res.status(401).json({
           code: 401,
           message: 'card exist'
         });
-      } else {
-        let flag = true;
-        let user_picks = rows[0].pick.split(',');
-        user_picks.pop();
-        for(let i=0; i<user_picks.length; i++) {
-          user_picks[i] = parseInt(user_picks[i]);
-          if(user_picks[i] == cardid) {
-            flag = false;
-          }
-        }
-        if(flag) {
-          const newPick = rows[0].pick + cardid.toString() + ',';
-          connection.query(`UPDATE USER SET pick='${newPick}' WHERE NAME='${username}';`, (err, rows, fields) => {
-            return res.status(200).json({
-              code: 200,
-              message: 'insertion success',
-            });
-          })
-        } else {
-          return res.status(401).json({
-            code: 401,
-            message: 'card exist'
-          });
-        }
-
       }
-    })
+      } 
+    }
+  })
 });
 
 app.post('/api/delete', (req, res) => {
@@ -248,6 +291,12 @@ app.post('/api/delete', (req, res) => {
       });
     } else {
       let flag = false;
+      if(rows[0].pick === null) {
+        return res.status(401).json({
+          code: 401,
+          message: 'card 0'
+        });
+      }
       let user_picks = rows[0].pick.split(',');
       let newPick = '';
       user_picks.pop();

@@ -14,6 +14,7 @@ const UserCards = (props) => {
         headers: {
             'Content-Type': 'application/json',
             'authorization': user
+
         }
       }).then(response => response.json())
       .then( result => {
@@ -47,7 +48,7 @@ const UserCards = (props) => {
             <br/>
             <Container style={{'paddingTop':'1.2rem'}}>
                 <Row xs="2" sm="2" md="4">
-                    {picks.map((data, index) => 
+                    {picks && picks.map((data, index) => 
                     <Col key = {index}>
                     <PickedCard
                         key = {index}

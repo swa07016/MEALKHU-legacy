@@ -30,11 +30,12 @@ const SigninPage = (props) => {
             body: JSON.stringify(signupInfo),
             headers: {
               "Content-Type": "application/json"
+
             }
           };
 
         if( username && password ) {
-            fetch("http://localhost:3000/api/signup", signup_info)
+            fetch("/api/signup", signup_info)
             .then(response => response.json())
             .then(json => {
                 if(json.message === 'success') {

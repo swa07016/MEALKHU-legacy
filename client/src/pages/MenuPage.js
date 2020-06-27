@@ -27,8 +27,7 @@ const MenuPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-              '/api/datas',
-              // localhostë¡œ ë°”ê¾¸ê¸°
+              '/api/datas'
             );
             setDatas(result.data);
             setIsLoading(true);
@@ -169,7 +168,7 @@ const MenuPage = (props) => {
                         {filteredDatas.map((data, index) => 
                         <Col>
                         <MealCard
-                            key = {index}
+                            key = {data.id}
                             id = {data.id}
                             name = {data.name}
                             address = {data.address}
