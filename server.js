@@ -64,7 +64,7 @@ app.post("/api/signup", (req, res) => {
 
   let sql_usercheck = `SELECT * FROM USER WHERE name='${req.body.username}';`;
   connection.query(sql_usercheck, (err, rows, fields) => {
-    if(rows.length!==0) {
+    if(rows.length) {
       return res.json({
         code: 400,
         message: 'user exist'
@@ -100,7 +100,7 @@ app.post("/api/signin", (req, res) => {
   let sql_usercheck = `SELECT * FROM USER WHERE name='${req.body.username}';`;
  
   connection.query(sql_usercheck, (err, rows, fields) => {
-    if(rows.length === 0) {
+    if(!rows.length) {
       return res.send({
         code: 400,
         message: "user does not exist",

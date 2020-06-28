@@ -16,13 +16,15 @@ const NavBar = (props) => {
 
   return (
     <>
-      <Navbar style={{'backgroundColor': '#940f0f', 'display':'block'}} light expand="md" fixed="top">
+      <Navbar dark style={{'backgroundColor': '#940f0f', 'display':'block'}} light expand="md" fixed="top">
       <Container className="themed-container">
         <span>
             <a href='/'><img src="logo.png" alt="logo" width="50" /></a>
         </span>
         <NavbarBrand href="/" style={{'marginLeft':'1.5rem', 'color':'#fff'}}>MEALKHU</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+        <NavbarToggler style={{
+          
+        }} onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
