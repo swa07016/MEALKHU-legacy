@@ -29,7 +29,8 @@ const SigninPage = (props) => {
             method: "POST",
             body: JSON.stringify(signupInfo),
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              'Accept': 'application/json'
 
             }
           };

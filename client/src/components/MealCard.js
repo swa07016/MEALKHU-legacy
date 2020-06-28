@@ -24,7 +24,8 @@ const MealCard = (props) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': user
+                'authorization': user,
+                'Accept': 'application/json'
             }
         }).then(response => response.json())
         .then(result => {

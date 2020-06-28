@@ -34,7 +34,8 @@ const MealCard = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': user
+                'authorization': user,
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
               "cardid":props.id
