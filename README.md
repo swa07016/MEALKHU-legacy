@@ -1,3 +1,6 @@
+- 이 저장소에는 초기 [MEALKHU](https://www.mealkhu.com/) 프로젝트의 레거시 코드가 저장되어 있습니다.
+- 최신 저장소 : [MEALKHU-client](https://github.com/swa07016/mealkhu-client)
+---
 # MEALKHU
 MEALKHU는 경희대학생들의 식사고민을 덜어주기 위해 제작된 웹사이트입니다. 경희대 근처 생활권(정건, 마을)에 있는 식당들을 종류별로 카테고리화 했습니다. 랜딩페이지에서 랜덤추천 및 mealkhu맵을 이용할 수 있고, 메뉴페이지에서 메뉴별 식당들을 조회할 수 있습니다. pick기능으로 원하는 식당을 mypick에 담아 둘 수 있습니다. 
 
